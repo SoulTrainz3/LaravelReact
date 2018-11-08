@@ -1,0 +1,23 @@
+.Wrapper {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
+  align-items: center;
+  overflow: auto;
+  user-select: none;
+}
+
+.IndividualBackdrop {
+  padding: 20px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 0;
+  transition: 0.3s;
+}
+
+.IndividualBackdrop:hover {
+  font-size: 36px;
+  padding: 0px;
+}
