@@ -1,0 +1,11 @@
+.entriesContainer {
+    width: 200px;
+    height: 400px;
+    overflow: auto;
+}
+
+.backButton {
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 5px;
+}

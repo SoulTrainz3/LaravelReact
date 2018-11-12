@@ -1,0 +1,11 @@
+.about {
+    width: 350px;
+    text-align: center;
+    margin: auto;
+}
+
+.backButton {
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 5px;
+  }
