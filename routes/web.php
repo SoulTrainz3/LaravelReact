@@ -15,4 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::any('/data', 'DataController@data');
+Route::get('/get-hobbies', 'DataController@getHobbies');
+Route::post('/insert-hobby', 'DataController@insertHobbies');
