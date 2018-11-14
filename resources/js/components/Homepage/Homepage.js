@@ -9,14 +9,29 @@ class Homepage extends Component {
   }
  
   handleInput = (event) => {
+    // console.log(event.target.name);
     event.preventDefault();
     this.setState({
       input: event.target.value,
+
     })
   }
 
-  handleSubmit = () => {
-    axios.post('/insert-hobby', this.state.input)
+
+  handleSubmit = (event) => {
+    const _token = document.getElementById('csrf-token').getAttribute('content');
+    // console.log(_token);
+    const post = this.state.input;
+    // console.log(post);
+
+    axios({
+        method: 'post',
+        url: '/insert-hobby',
+        data: post,
+        headers: {
+            'X-CSRF-TOKEN': _token,
+        },
+    })
     .then(response => {
       console.log('Success', response.data);
       this.setState({

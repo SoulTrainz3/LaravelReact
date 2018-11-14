@@ -59006,12 +59006,26 @@ var Homepage = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Homepage.__proto__ || Object.getPrototypeOf(Homepage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       input: ''
     }, _this.handleInput = function (event) {
+      // console.log(event.target.name);
       event.preventDefault();
       _this.setState({
         input: event.target.value
+
       });
-    }, _this.handleSubmit = function () {
-      _axios2.default.post('/insert-hobby', _this.state.input).then(function (response) {
+    }, _this.handleSubmit = function (event) {
+      var _token = document.getElementById('csrf-token').getAttribute('content');
+      // console.log(_token);
+      var post = _this.state.input;
+      // console.log(post);
+
+      (0, _axios2.default)({
+        method: 'post',
+        url: '/insert-hobby',
+        data: post,
+        headers: {
+          'X-CSRF-TOKEN': _token
+        }
+      }).then(function (response) {
         console.log('Success', response.data);
         _this.setState({
           input: ''
@@ -59071,8 +59085,8 @@ var input = function input(props) {
             { className: 'Container' },
             _react2.default.createElement(
                 'form',
-                { onSubmit: props.handleSubmit },
-                _react2.default.createElement('input', { className: 'Input', onChange: props.handleInput, value: props.input })
+                { name: 'submitHobby', action: '/insert-hobby', method: 'POST', onSubmit: props.handleSubmit },
+                _react2.default.createElement('input', { name: 'hobby', className: 'Input', onChange: props.handleInput, value: props.input })
             )
         ),
         _react2.default.createElement(
