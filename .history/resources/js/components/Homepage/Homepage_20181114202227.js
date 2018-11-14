@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Input from '../Input/Input';
 
 class Homepage extends Component {
   
   state = {
     input: '',
+    entrie: '',
   }
  
   handleInput = (event) => {
@@ -16,21 +16,19 @@ class Homepage extends Component {
   }
 
   handleSubmit = () => {
-    axios.post('/insert-hobby', this.state.input)
-    .then(response => {
-      console.log('Success', response.data);
-      this.setState({
-        input: '',
-      })
+    this.setState({
+      entrie: this.state.input,
+      input: '',
     })
-    .catch(error => {
-      console.log('Error', error);
-    })
+
+    if(this.state.entrie)
   }
+
+  handle
 
   render() {
     return (
-      <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>
+      <Input/>
     );
   }
 }

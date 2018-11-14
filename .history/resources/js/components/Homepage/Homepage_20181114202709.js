@@ -26,11 +26,14 @@ class Homepage extends Component {
     .catch(error => {
       console.log('Error', error);
     })
+    
   }
+
+  handle
 
   render() {
     return (
-      <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>
+      <Input/>
     );
   }
 }

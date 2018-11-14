@@ -28,9 +28,11 @@ class Homepage extends Component {
     })
   }
 
+  handle
+
   render() {
     return (
-      <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>
+      <Input />
     );
   }
 }

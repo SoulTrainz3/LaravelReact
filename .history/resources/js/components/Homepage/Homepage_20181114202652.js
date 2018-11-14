@@ -16,7 +16,7 @@ class Homepage extends Component {
   }
 
   handleSubmit = () => {
-    axios.post('/insert-hobby', this.state.input)
+    axios.post('/get-hobbies', this.state.input)
     .then(response => {
       console.log('Success', response.data);
       this.setState({
@@ -26,11 +26,14 @@ class Homepage extends Component {
     .catch(error => {
       console.log('Error', error);
     })
+    
   }
+
+  handle
 
   render() {
     return (
-      <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>
+      <Input/>
     );
   }
 }

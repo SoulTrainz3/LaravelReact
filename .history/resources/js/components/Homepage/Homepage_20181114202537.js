@@ -16,21 +16,20 @@ class Homepage extends Component {
   }
 
   handleSubmit = () => {
-    axios.post('/insert-hobby', this.state.input)
+    axios.post('/get-hobbies', this.state.input)
     .then(response => {
-      console.log('Success', response.data);
-      this.setState({
-        input: '',
-      })
+      console.log(response.data);
     })
-    .catch(error => {
-      console.log('Error', error);
+    this.setState({
+      input: '',
     })
   }
 
+  handle
+
   render() {
     return (
-      <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>
+      <Input/>
     );
   }
 }
