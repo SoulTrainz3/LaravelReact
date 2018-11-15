@@ -7,7 +7,7 @@ const input = props => (
             <p>What's your hobby?</p>
         </div>
         <div className={'Container'}>
-            <form name="submitHobby" action="/insert-hobby" method = "POST" onSubmit={props.handleSubmit}>
+            <form name="submitHobby" onSubmit={props.handleSubmit}>
                 
                 <input name="hobby" className={'Input'} onChange={props.handleInput} value={props.input}></input>
             </form>

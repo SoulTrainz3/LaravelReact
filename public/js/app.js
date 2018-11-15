@@ -59013,20 +59013,18 @@ var Homepage = function (_Component) {
 
       });
     }, _this.handleSubmit = function (event) {
-      var _token = document.getElementById('csrf-token').getAttribute('content');
+      // const _token = document.getElementById('csrf-token').getAttribute('content');
       // console.log(_token);
+      event.preventDefault();
       var post = _this.state.input;
       // console.log(post);
 
       (0, _axios2.default)({
         method: 'post',
         url: '/insert-hobby',
-        data: post,
-        headers: {
-          'X-CSRF-TOKEN': _token
-        }
+        data: post
       }).then(function (response) {
-        console.log('Success', response.data);
+        console.log(response.data);
         _this.setState({
           input: ''
         });
@@ -59085,7 +59083,7 @@ var input = function input(props) {
             { className: 'Container' },
             _react2.default.createElement(
                 'form',
-                { name: 'submitHobby', action: '/insert-hobby', method: 'POST', onSubmit: props.handleSubmit },
+                { name: 'submitHobby', onSubmit: props.handleSubmit },
                 _react2.default.createElement('input', { name: 'hobby', className: 'Input', onChange: props.handleInput, value: props.input })
             )
         ),
