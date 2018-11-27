@@ -58981,6 +58981,14 @@ var _Input = __webpack_require__(51);
 
 var _Input2 = _interopRequireDefault(_Input);
 
+var _profanityDB = __webpack_require__(59);
+
+var _profanityDB2 = _interopRequireDefault(_profanityDB);
+
+var _Backdrop = __webpack_require__(60);
+
+var _Backdrop2 = _interopRequireDefault(_Backdrop);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59004,7 +59012,9 @@ var Homepage = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Homepage.__proto__ || Object.getPrototypeOf(Homepage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      input: ''
+      input: '',
+      hasSubmited: false,
+      entries: []
     }, _this.handleInput = function (event) {
       // console.log(event.target.name);
       event.preventDefault();
@@ -59016,28 +59026,42 @@ var Homepage = function (_Component) {
       // const _token = document.getElementById('csrf-token').getAttribute('content');
       // console.log(_token);
       event.preventDefault();
-      var post = _this.state.input;
-      // console.log(post);
+      var profanity2 = 1;
+      if (_profanityDB2.default.includes(_this.state.input)) {
+        console.log('Includes');
+        profanity2 = 0;
+      }
+      var post = {
+        value: _this.state.input,
+        profanity: profanity2
+        // console.log(post);
 
-      (0, _axios2.default)({
+      };(0, _axios2.default)({
         method: 'post',
         url: '/insert-hobby',
         data: post
       }).then(function (response) {
         console.log(response.data);
         _this.setState({
-          input: ''
+          input: '',
+          hasSubmited: true,
+          entries: response.data
         });
       }).catch(function (error) {
         console.log('Error', error);
       });
+    }, _this.toRender = function () {
+      if (!_this.state.hasSubmited) {
+        return _react2.default.createElement(_Input2.default, { handleInput: _this.handleInput, handleSubmit: _this.handleSubmit, input: _this.state.input });
+      }
+      return _react2.default.createElement(_Backdrop2.default, { entries: _this.state.entries });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Homepage, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_Input2.default, { handleInput: this.handleInput, handleSubmit: this.handleSubmit, input: this.state.input });
+      return this.toRender();
     }
   }]);
 
@@ -59068,7 +59092,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var input = function input(props) {
     return _react2.default.createElement(
         'div',
-        { className: 'Wrapper' },
+        { className: 'InputWrapper' },
         _react2.default.createElement(
             'div',
             { className: 'Title' },
@@ -59145,7 +59169,7 @@ exports = module.exports = __webpack_require__(54)(false);
 
 
 // module
-exports.push([module.i, ".Container {\r\n  display: flex;\r\n  width: 400px;\r\n  height: 75px;\r\n  background-color: cadetblue;\r\n  border-radius: 5px;\r\n  box-shadow: 5px 10px 8px #999;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 100;\r\n}\r\n\r\n.Input {\r\n  width: 350px;\r\n  height: 35px;\r\n  outline: none;\r\n  font-size: 24px;\r\n}\r\n\r\n.Wrapper {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  width: 100%;\r\n  height: 100vh;\r\n  z-index: 100;\r\n  position: relative;\r\n}\r\n\r\n.Backdrop {\r\n  position: absolute;\r\n  z-index: 50;\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: space-evenly;\r\n  align-content: flex-start;\r\n  align-items: flex-start;\r\n  height: 100%;\r\n  overflow: hidden;\r\n}\r\n\r\n.Title {\r\n  background-color: white;\r\n  z-index: 55;\r\n  position: relative;\r\n  font-size: 34px;\r\n}\r\n\r\n.UnderInput {\r\n  margin-top: 20px;\r\n  margin-bottom: 206px;\r\n}", ""]);
+exports.push([module.i, ".Container {\r\n  display: flex;\r\n  width: 400px;\r\n  height: 75px;\r\n  background-color: cadetblue;\r\n  border-radius: 5px;\r\n  box-shadow: 5px 10px 8px #999;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 100;\r\n}\r\n\r\n.Input {\r\n  width: 350px;\r\n  height: 35px;\r\n  outline: none;\r\n  font-size: 24px;\r\n}\r\n\r\n.InputWrapper {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  width: 100%;\r\n  height: 100vh;\r\n  z-index: 100;\r\n  position: relative;\r\n}\r\n\r\n.Backdrop {\r\n  position: absolute;\r\n  z-index: 50;\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: space-evenly;\r\n  align-content: flex-start;\r\n  align-items: flex-start;\r\n  height: 100%;\r\n  overflow: hidden;\r\n}\r\n\r\n.Title {\r\n  background-color: white;\r\n  z-index: 55;\r\n  position: relative;\r\n  font-size: 34px;\r\n}\r\n\r\n.UnderInput {\r\n  margin-top: 20px;\r\n  margin-bottom: 206px;\r\n}", ""]);
 
 // exports
 
@@ -59691,6 +59715,106 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 58 */,
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var profanity = ["4r5e", "5h1t", "5hit", "fut", "a55", "sex", "anal", "anus", "ar5e", "arrse", "arse", "ass", "ass-fucker", "asses", "assfucker", "assfukka", "asshole", "assholes", "asswhole", "a_s_s", "b!tch", "b00bs", "b17ch", "b1tch", "ballbag", "balls", "ballsack", "bastard", "beastial", "beastiality", "bellend", "bestial", "bestiality", "bi+ch", "biatch", "bitch", "bitcher", "bitchers", "bitches", "bitchin", "bitching", "bloody", "blow job", "blowjob", "blowjobs", "boiolas", "bollock", "bollok", "boner", "boob", "boobs", "booobs", "boooobs", "booooobs", "booooooobs", "breasts", "buceta", "bugger", "bum", "bunny fucker", "butt", "butthole", "buttmuch", "buttplug", "c0ck", "c0cksucker", "carpet muncher", "cawk", "chink", "cipa", "cl1t", "clit", "clitoris", "clits", "cnut", "cock", "cock-sucker", "cockface", "cockhead", "cockmunch", "cockmuncher", "cocks", "cocksuck", "cocksucked", "cocksucker", "cocksucking", "cocksucks", "cocksuka", "cocksukka", "cok", "cokmuncher", "coksucka", "coon", "cox", "crap", "cum", "cummer", "cumming", "cums", "cumshot", "cunilingus", "cunillingus", "cunnilingus", "cunt", "cuntlick", "cuntlicker", "cuntlicking", "cunts", "cyalis", "cyberfuc", "cyberfuck", "cyberfucked", "cyberfucker", "cyberfuckers", "cyberfucking", "d1ck", "damn", "dick", "dickhead", "dildo", "dildos", "dink", "dinks", "dirsa", "dlck", "dog-fucker", "doggin", "dogging", "donkeyribber", "doosh", "duche", "dyke", "ejaculate", "ejaculated", "ejaculates", "ejaculating", "ejaculatings", "ejaculation", "ejakulate", "f u c k", "f u c k e r", "f4nny", "fag", "fagging", "faggitt", "faggot", "faggs", "fagot", "fagots", "fags", "fanny", "fannyflaps", "fannyfucker", "fanyy", "fatass", "fcuk", "fcuker", "fcuking", "feck", "fecker", "felching", "fellate", "fellatio", "fingerfuck", "fingerfucked", "fingerfucker", "pizdocalmin", "fingerfuckers", "fingerfucking", "fingerfucks", "fistfuck", "fistfucked", "fistfucker", "fistfuckers", "fistfucking", "fistfuckings", "fistfucks", "flange", "fook", "fooker", "fuck", "fucka", "fucked", "fucker", "fuckers", "fuckhead", "fuckheads", "fuckin", "fucking", "fuckings", "fuckingshitmotherfucker", "fuckme", "fucks", "fuckwhit", "fuckwit", "fudge packer", "fudgepacker", "fuk", "fuker", "fukker", "fukkin", "fuks", "fukwhit", "fukwit", "fux", "fux0r", "f_u_c_k", "gangbang", "gangbanged", "gangbangs", "gaylord", "gaysex", "goatse", "God", "god-dam", "god-damned", "goddamn", "goddamned", "hardcoresex", "hell", "heshe", "hoar", "hoare", "hoer", "homo", "hore", "horniest", "horny", "hotsex", "jack-off", "jackoff", "jap", "jerk-off", "jism", "jiz", "jizm", "jizz", "kawk", "knob", "knobead", "knobed", "knobend", "knobhead", "knobjocky", "knobjokey", "kock", "kondum", "kondums", "kum", "kummer", "kumming", "kums", "kunilingus", "l3i+ch", "l3itch", "labia", "lust", "lusting", "m0f0", "m0fo", "m45terbate", "ma5terb8", "ma5terbate", "masochist", "master-bate", "masterb8", "masterbat*", "masterbat3", "masterbate", "masterbation", "masterbations", "masturbate", "mo-fo", "mof0", "mofo", "mothafuck", "mothafucka", "mothafuckas", "mothafuckaz", "mothafucked", "mothafucker", "mothafuckers", "mothafuckin", "mothafucking", "mothafuckings", "mothafucks", "mother fucker", "motherfuck", "motherfucked", "motherfucker", "motherfuckers", "motherfuckin", "motherfucking", "motherfuckings", "motherfuckka", "motherfucks", "muff", "mutha", "muthafecker", "muthafuckker", "muther", "mutherfucker", "n1gga", "n1gger", "nazi", "nigg3r", "nigg4h", "nigga", "niggah", "niggas", "niggaz", "nigger", "niggers", "nob", "nob jokey", "nobhead", "nobjocky", "nobjokey", "numbnuts", "nutsack", "orgasim", "orgasims", "orgasm", "orgasms", "p0rn", "pawn", "pecker", "penis", "penisfucker", "phonesex", "phuck", "phuk", "phuked", "phuking", "phukked", "phukking", "phuks", "phuq", "pigfucker", "pimpis", "piss", "pissed", "pisser", "pissers", "pisses", "pissflaps", "pissin", "pissing", "pissoff", "poop", "porn", "porno", "pornography", "pornos", "prick", "pricks", "pron", "pube", "pusse", "pussi", "pussies", "pussy", "pussys", "rectum", "retard", "rimjaw", "rimming", "s hit", "s.o.b.", "sadist", "schlong", "screwing", "scroat", "scrote", "scrotum", "semen", "sex", "sh!+", "sh!t", "sh1t", "shag", "shagger", "shaggin", "shagging", "shemale", "shi+", "shit", "shitdick", "shite", "shited", "shitey", "shitfuck", "shitfull", "shithead", "shiting", "shitings", "shits", "shitted", "shitter", "shitters", "shitting", "shittings", "shitty", "skank", "slut", "sluts", "smegma", "smut", "snatch", "son-of-a-bitch", "spac", "spunk", "s_h_i_t", "t1tt1e5", "t1tties", "teets", "teez", "testical", "testicle", "tit", "titfuck", "tits", "titt", "tittie5", "tittiefucker", "titties", "tittyfuck", "tittywank", "titwank", "tosser", "turd", "tw4t", "twat", "twathead", "twatty", "twunt", "twunter", "v14gra", "v1gra", "vagina", "viagra", "vulva", "w00se", "wang", "wank", "wanker", "wanky", "whoar", "whore", "willies", "willy", "xrated", "xxx"];
+
+exports.default = profanity;
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(61);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var backdrop = function backdrop(props) {
+    var toRender = _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'div',
+            { className: 'Wrapper' },
+            props.entries.reverse().map(function (entrie, key) {
+                return _react2.default.createElement(
+                    'div',
+                    { key: key, className: 'IndividualBackdrop' },
+                    entrie.hobby
+                );
+            })
+        )
+    );
+    return toRender;
+};
+
+exports.default = backdrop;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(62);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(55)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../node_modules/css-loader/index.js!./Backdrop.css", function() {
+			var newContent = require("!!../../../../node_modules/css-loader/index.js!./Backdrop.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(54)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".Wrapper {\r\n  display:flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: space-around;\r\n  align-content: space-around;\r\n  align-items: center;\r\n  overflow: auto;\r\n  user-select: none;\r\n}\r\n\r\n.IndividualBackdrop {\r\n  padding: 20px;\r\n  flex-grow: 0;\r\n  flex-shrink: 0;\r\n  flex-basis: 0;\r\n  transition: 0.3s;\r\n}\r\n\r\n.IndividualBackdrop:hover {\r\n  font-size: 36px;\r\n  padding: 0px;\r\n}\r\n\r\n.backButton {\r\n  height: 20px;\r\n  margin-top: 10px;\r\n  margin-left: 5px;\r\n}", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
