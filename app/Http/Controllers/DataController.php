@@ -30,7 +30,8 @@ class DataController extends Controller
             );
         }
         // print_r($this->getAllEntries($request->filter));
-    return response($this->getAllEntries($request->filter));
+        $entries = $this->getAllEntries($request->filter);
+    return response($entries);
 
     }
 

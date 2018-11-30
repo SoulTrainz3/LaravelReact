@@ -10,7 +10,7 @@ class Homepage extends Component {
     input: '',
     hasSubmited: false,
     entries: [],
-    filter: true,
+    filter: 1,
   }
  
   handleInput = (event) => {
@@ -34,7 +34,7 @@ class Homepage extends Component {
     const post = { 
       value: this.state.input,
       profanity: profanity2,
-      filter: 0,
+      filter: this.state.filter,
     }
     // console.log(post);
 
