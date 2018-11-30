@@ -17,3 +17,7 @@ Route::get('/', function () {
 
 Route::get('/get-hobbies', 'DataController@getHobbies');
 Route::post('/insert-hobby', 'DataController@insertHobbies');
+
+Route::get('/results', function () {
+    return view('welcome');
+});

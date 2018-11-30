@@ -33,6 +33,7 @@ class Homepage extends Component {
     const post = { 
       value: this.state.input,
       profanity: profanity2,
+      filter: 0,
     }
     // console.log(post);
 
