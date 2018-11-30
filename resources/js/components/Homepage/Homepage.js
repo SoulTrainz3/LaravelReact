@@ -10,6 +10,7 @@ class Homepage extends Component {
     input: '',
     hasSubmited: false,
     entries: [],
+    filter: true,
   }
  
   handleInput = (event) => {
@@ -55,11 +56,34 @@ class Homepage extends Component {
     })
   }
 
+  handleBack = () => {
+    this.setState({
+      hasSubmited: false,
+    });
+  }
+
+  handleFilterChange = () => {
+    this.setState({
+      filter: !this.state.filter,
+    });
+  }
+
   toRender = () => {
     if(!this.state.hasSubmited) {
-      return <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>;
+      return ( 
+        <div>
+          <span>Safe?</span>
+          <input type='checkbox' onChange={this.handleFilterChange} checked={this.state.filter} />
+          <Input handleInput={this.handleInput} handleSubmit={this.handleSubmit} input={this.state.input}/>
+        </div>
+      );
     }
-    return <Backdrop entries={this.state.entries} />;
+    return ( 
+      <div>
+        <button className='backButton' onClick={this.handleBack}>Back</button>
+        <Backdrop entries={this.state.entries} />
+      </div>
+    );
   }
 
   render() {

@@ -59455,7 +59455,8 @@ var Homepage = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Homepage.__proto__ || Object.getPrototypeOf(Homepage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       input: '',
       hasSubmited: false,
-      entries: []
+      entries: [],
+      filter: true
     }, _this.handleInput = function (event) {
       // console.log(event.target.name);
       event.preventDefault();
@@ -59492,11 +59493,38 @@ var Homepage = function (_Component) {
       }).catch(function (error) {
         console.log('Error', error);
       });
+    }, _this.handleBack = function () {
+      _this.setState({
+        hasSubmited: false
+      });
+    }, _this.handleFilterChange = function () {
+      _this.setState({
+        filter: !_this.state.filter
+      });
     }, _this.toRender = function () {
       if (!_this.state.hasSubmited) {
-        return _react2.default.createElement(_Input2.default, { handleInput: _this.handleInput, handleSubmit: _this.handleSubmit, input: _this.state.input });
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'span',
+            null,
+            'Safe?'
+          ),
+          _react2.default.createElement('input', { type: 'checkbox', onChange: _this.handleFilterChange, checked: _this.state.filter }),
+          _react2.default.createElement(_Input2.default, { handleInput: _this.handleInput, handleSubmit: _this.handleSubmit, input: _this.state.input })
+        );
       }
-      return _react2.default.createElement(_Backdrop2.default, { entries: _this.state.entries });
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'button',
+          { className: 'backButton', onClick: _this.handleBack },
+          'Back'
+        ),
+        _react2.default.createElement(_Backdrop2.default, { entries: _this.state.entries })
+      );
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
